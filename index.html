@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleLens - העדשה שלך לעולם האופנה</title>
+<link rel="icon" href="assets/logo-icon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Rubik:wght@600;700;800&family=Varela+Round&family=Heebo:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="logo">
+      <img src="assets/logo-icon.png" alt="" class="logo-icon">
+      <span class="logo-block">
+        <span class="logo-text"><span class="logo-style">Style</span><span class="logo-lens">Lens</span></span>
+        <span class="logo-tagline">העדשה שלך לעולם האופנה</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <a href="#top">בית</a>
+      <a href="#try-it">נסו עכשיו</a>
+      <a href="#how">איך זה עובד</a>
+      <a href="#about">אודות הפרויקט</a>
+      <a href="#ai-tools">טכנולוגיה</a>
+    </nav>
+
+    <a href="#try-it" class="btn btn-primary nav-cta">העלו תמונה</a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="פתיחת תפריט" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-blob" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="eyebrow">מנוע חיפוש אופנה ויזואלי מבוסס AI</p>
+        <h1>העדשה שלך <br> לעולם האופנה</h1>
+        <p class="hero-sub">
+          ראיתם לוק שאהבתם באינסטגרם או באתר כלשהו ולא ידעתם איך למצוא אותו?
+          העלו תמונה, ו-StyleLens תזהה את הפריטים בלוק ותעזור לכם למצוא אותם - או פריטים דומים - לקנייה.
+        </p>
+        <div class="hero-actions">
+          <a href="#try-it" class="btn btn-primary">העלו תמונה וגלו את הלוק</a>
+          <a href="#how" class="btn btn-ghost">איך זה עובד?</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <img src="assets/logo-icon.png" alt="" class="hero-lens-icon">
+      </div>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>ג'קטים</span><span>תיקים</span><span>נעליים</span><span>שמלות</span>
+        <span>מעילים</span><span>אביזרים</span><span>סניקרס</span><span>תכשיטים</span>
+        <span>ג'קטים</span><span>תיקים</span><span>נעליים</span><span>שמלות</span>
+        <span>מעילים</span><span>אביזרים</span><span>סניקרס</span><span>תכשיטים</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRY IT / DEMO -->
+  <section class="demo-section" id="try-it">
+    <div class="container">
+      <p class="eyebrow center">נסו את זה בעצמכם</p>
+      <h2 class="section-title center reveal">העלו תמונות של לוקים שאהבתם</h2>
+      <p class="section-sub center">
+        אפשר להעלות כמה תמונות יחד. סמנו על כל תמונה מסגרת סביב פריט (ג'קט, תיק, ג'ינס...) ותנו לו שם -
+        או השאירו בלי סימון כדי לחפש לפי התמונה כולה. החיפוש מתבצע בפועל מול מנוע Google Lens
+        (דרך SerpApi) ומחזיר פריטים אמיתיים מאתרים ברשת.
+      </p>
+
+      <div class="demo-card reveal">
+        <div class="upload-area" id="dropzone">
+          <input type="file" id="file-input" accept="image/*" multiple hidden>
+          <div class="upload-placeholder" id="upload-placeholder">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 16V4M12 4l-4 4M12 4l4 4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p><strong>גררו תמונות לכאן</strong> או לחצו לבחירת קבצים</p>
+            <span class="upload-hint">אפשר לבחור כמה תמונות יחד · PNG / JPG - עד 10MB לתמונה</span>
+          </div>
+        </div>
+
+        <div class="image-editors" id="image-editors"></div>
+
+        <div class="demo-actions">
+          <button class="btn btn-text" id="reset-btn" hidden>נקו הכל</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <div class="container">
+      <p class="eyebrow center">התהליך</p>
+      <h2 class="section-title center reveal">איך StyleLens עובדת</h2>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">01</div>
+          <h3>מעלים תמונה</h3>
+          <p>שומרים תמונה של לוק שאהבתם - מרשת חברתית, אתר אופנה או תמונה אישית - ומעלים אותה לאפליקציה.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">02</div>
+          <h3>ה-AI מחפש התאמות</h3>
+          <p>מנוע החיפוש הוויזואלי של Google Lens (דרך SerpApi) סורק את התמונה ומאתר פריטים דומים במראה, בצבע ובסגנון.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">03</div>
+          <h3>מקבלים התאמות לקנייה</h3>
+          <p>המערכת מציגה את הפריט המדויק אם נמצא, או פריטים דומים במראה ובסגנון שאפשר לרכוש אונליין.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="container about-inner">
+      <div class="about-text reveal">
+        <p class="eyebrow">אודות הפרויקט</p>
+        <h2 class="section-title">מהתמונה שאהבתם - ישר לעגלת הקניות</h2>
+        <p>
+          StyleLens נועדה לפתור מצב מוכר: רואים בגד, תיק, נעליים או אביזר בתמונה,
+          אבל אין מושג איך לחפש אותו או איפה למצוא אותו. המילים לא תמיד מספיקות כדי לתאר לוק -
+          אבל תמונה כן.
+        </p>
+        <p>
+          הפרויקט מיועד בעיקר לאנשים שקונים אופנה אונליין ומקבלים השראה מתמונות ברשת וברשתות
+          החברתיות, והמטרה היא להפוך את החיפוש אחר פריטי אופנה לפי תמונה לפשוט, מהיר ונוח יותר.
+        </p>
+        <ul class="about-list">
+          <li>חיפוש ויזואלי במקום מילות מפתח</li>
+          <li>זיהוי אוטומטי של סוג, צבע וסגנון הפריט</li>
+          <li>הצעת פריטים זהים או דומים לרכישה</li>
+        </ul>
+      </div>
+      <div class="about-visual reveal" aria-hidden="true">
+        <div class="about-card card-1"></div>
+        <div class="about-card card-2"></div>
+        <div class="about-card card-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI TOOLS -->
+  <section class="ai-section" id="ai-tools">
+    <div class="container">
+      <p class="eyebrow center">טכנולוגיה שמאחורי הפרויקט</p>
+      <h2 class="section-title center">כלי ה-AI ששימשו בבניית StyleLens</h2>
+
+      <div class="ai-cards">
+        <div class="ai-card reveal">
+          <h3>Claude <span>· Visual Studio Code</span></h3>
+          <p>שימש לבניית האתר וכתיבת הקוד - המבנה, העיצוב והפונקציונליות של האפליקציה - לפי הבריף שהוגדר.</p>
+        </div>
+        <div class="ai-card reveal">
+          <h3>SerpApi <span>· מנוע Google Lens</span></h3>
+          <p>מבצע את החיפוש הוויזואלי בפועל: מקבל את התמונה שהועלתה ומחזיר פריטי אופנה דומים מאתרים אמיתיים ברחבי הרשת, כולל קישור לרכישה.</p>
+        </div>
+      </div>
+
+      <p class="ai-note">
+        החיפוש רץ מול שרת Node.js מקומי (Express) ששומר את מפתח ה-API בצד השרת ולא חושף אותו בדפדפן.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo">
+      <img src="assets/logo-icon.png" alt="" class="logo-icon small">
+      <span class="logo-block">
+        <span class="logo-text small"><span class="logo-style">Style</span><span class="logo-lens">Lens</span></span>
+        <span class="logo-tagline small">העדשה שלך לעולם האופנה</span>
+      </span>
+    </div>
+    <p class="footer-note">עבודת גמר · מבוא לבינה מלאכותית</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

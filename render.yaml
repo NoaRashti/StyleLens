@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: stylelens
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: SERPAPI_KEY
+        sync: false
