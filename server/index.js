@@ -51,7 +51,7 @@ app.post('/api/search', upload.single('image'), async (req, res) => {
 
   try {
     const compressed = await compressForUpload(req.file.buffer);
-    const raw = await findSimilarProducts(compressed, { type: 'products' });
+    const raw = await findSimilarProducts(compressed, { type: 'visual_matches' });
     const products = extractProducts(raw);
     res.json({ products });
   } catch (err) {

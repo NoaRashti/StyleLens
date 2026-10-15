@@ -50,7 +50,10 @@ async function uploadImage(imageBuffer) {
  */
 export async function findSimilarProducts(image, options = {}) {
   assertKeyConfigured();
-  const { type = 'products', hl, country } = options;
+  // NOTE: SerpApi discontinued the 'products' google_lens type (confirmed 2026-10-15 via a
+  // live "has been discontinued" API error) - 'visual_matches' is the current equivalent and
+  // is what extractProducts() already reads first.
+  const { type = 'visual_matches', hl, country } = options;
 
   let imageParam;
   if (typeof image === 'string' && /^https?:\/\//i.test(image)) {
