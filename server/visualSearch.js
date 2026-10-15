@@ -53,7 +53,9 @@ export async function findSimilarProducts(image, options = {}) {
   // NOTE: SerpApi discontinued the 'products' google_lens type (confirmed 2026-10-15 via a
   // live "has been discontinued" API error) - 'visual_matches' is the current equivalent and
   // is what extractProducts() already reads first.
-  const { type = 'visual_matches', hl, country } = options;
+  // hl/country default to Hebrew/Israel since this is an Israeli fashion app - pass
+  // explicit options to override (e.g. hl: null to let Google auto-detect).
+  const { type = 'visual_matches', hl = 'iw', country = 'il' } = options;
 
   let imageParam;
   if (typeof image === 'string' && /^https?:\/\//i.test(image)) {
@@ -74,17 +76,45 @@ export async function findSimilarProducts(image, options = {}) {
   });
 }
 
+// visual_matches pulls in social/video posts (someone's Instagram outfit photo, a TikTok,
+// a Pinterest pin) alongside real shopping listings - those aren't places you can buy the
+// item, so we drop them rather than show them as "similar products".
+const EXCLUDED_HOSTS = [
+  'instagram.com', 'facebook.com', 'tiktok.com', 'pinterest.com', 'pin.it',
+  'youtube.com', 'youtu.be', 'twitter.com', 'x.com', 'threads.net', 'reddit.com',
+];
+
+function isExcludedSource(link) {
+  try {
+    const host = new URL(link).hostname.replace(/^www\./, '');
+    return EXCLUDED_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+  } catch {
+    return false;
+  }
+}
+
+// Visual similarity search pulls in results from anywhere in the world, regardless of
+// language. Hebrew readers can't act on an Arabic-titled listing, so we drop those -
+// Hebrew and Latin/English titles both pass through untouched.
+const ARABIC_SCRIPT = /[؀-ۿݐ-ݿࢠ-ࣿ]/;
+
+function isArabicTitle(title) {
+  return typeof title === 'string' && ARABIC_SCRIPT.test(title);
+}
+
 /**
  * Normalizes a raw google_lens response into a simple list of
  * { title, link, source, thumbnail, price }, regardless of which
- * result array the requested `type` produced.
+ * result array the requested `type` produced. Social/video posts (not real
+ * shopping listings, see EXCLUDED_HOSTS) and Arabic-titled results are filtered out.
  */
 export function extractProducts(serpApiResponse) {
-  const list =
+  const list = (
     serpApiResponse.visual_matches ||
     serpApiResponse.products ||
     serpApiResponse.shopping_results ||
-    [];
+    []
+  ).filter((item) => item.link && !isExcludedSource(item.link) && !isArabicTitle(item.title));
 
   return list.map((item) => ({
     title: item.title,
