@@ -56,7 +56,12 @@ app.post('/api/search', upload.single('image'), async (req, res) => {
     res.json({ products });
   } catch (err) {
     console.error('search failed:', err);
-    res.status(502).json({ error: err.message || 'החיפוש נכשל' });
+    const detail =
+      err?.message ||
+      err?.error ||
+      (typeof err === 'string' ? err : null) ||
+      (() => { try { return JSON.stringify(err); } catch { return String(err); } })();
+    res.status(502).json({ error: 'החיפוש נכשל', detail });
   }
 });
 
